@@ -12,7 +12,18 @@ router.use(async (ctx, next) => {
   Object.assign(ctx.state, {
     ngosPath: ctx.router.url('ngos'),
     newSessionPath: ctx.router.url('session-new'),
+    destroySessionPath: ctx.router.url('session-destroy'),
   });
+  return next();
+});
+
+/**
+ * Middleware to provide "current user" (if available) to every other route middleware
+ */
+router.use(async (ctx, next) => {
+  if (ctx.session.currentUserId) {
+    ctx.state.currentUser = await ctx.orm.user.findById(ctx.session.currentUserId);
+  }
   return next();
 });
 

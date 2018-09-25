@@ -21,9 +21,20 @@
         <a href="">Sobre nosotros</a>
       </nav>
       <div id="user-bar">
-        <a href="<%= newSessionPath %>">Inicia sesión</a>
+        <% if (locals.currentUser) { %>
+          Bienvenido, <%= currentUser.firstName %>
+          <form action="<%= destroySessionPath %>" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <input type="submit" value="Cerrar Sesión" />
+          </form>
+        <% } else { %>
+          <a href="<%= newSessionPath %>">Iniciar sesión</a>
+        <% } %>
       </div>
     </header>
+    <% if (notice = flashMessage.notice) { %>
+      <div class="alert notice"><%= notice %></div>
+    <% } %>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>
   </body>
