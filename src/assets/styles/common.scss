@@ -1,0 +1,51 @@
+.error {
+  color: $wican-orange;
+  text-align: center;
+}
+
+form.single-form {
+  margin: 0 auto;
+  width: 400px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 0px $wican-green;
+  padding: 50px;
+  label {
+    display: block;
+    margin: 20px 0;
+    span {
+      display: inline-block;
+      width: 45%;
+      margin-right: 5%;
+      text-align: right;
+    }
+    input {
+      color: #333;
+      font-size: 17px;
+      outline: none;
+      border: 0;
+      border-bottom: 1px solid $wican-cyan;
+    }
+  }
+  .actions {
+    margin-top: 40px;
+    text-align: center;
+    input {
+      box-shadow: 0 0 2px 0 gray;
+      border: 1px solid $wican-cyan;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: all 200ms ease-in;
+      text-transform: uppercase;
+      background: $wican-cyan;
+      color: white;
+      outline: none;
+      &:hover {
+        cursor: pointer;
+        background: lighten($wican-cyan, 10%);
+      }
+      &:active {
+        background: darken($wican-cyan, 10%);
+      }
+    }
+  }
+}
