@@ -62,11 +62,10 @@ router.get('users-edit', '/:id/edit', (ctx) => {
 router.patch('users-update', '/:id', async (ctx) => {
   const { user } = ctx.state;
   try {
-    await user.update(
-      ctx.request.body,
-      { fields: ['firstName', 'lastName', 'email', 'password'] },
-    );
-    ctx.redirect('users-show', user.id);
+    const params = ctx.request.body;
+    if (!params.password) delete params.password;
+    await user.update(params, { fields: ['firstName', 'lastName', 'email', 'password'] });
+    ctx.redirect(ctx.router.url('users-show', user.id));
   } catch (error) {
     if (!isValidationError(error)) throw error;
     await ctx.render('users/edit', {

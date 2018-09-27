@@ -11,8 +11,8 @@ router.get('session-new', '/new', ctx => ctx.render(
 
 router.put('session-create', '/', async (ctx) => {
   const { email, password } = ctx.request.body;
-  const user = await ctx.orm.user.findOne({ where: { email, password } });
-  if (user) {
+  const user = await ctx.orm.user.findOne({ where: { email } });
+  if (user && await user.checkPassword(password)) {
     ctx.session.currentUserId = user.id;
     ctx.flashMessage.notice = 'Inicio de sesión exitoso';
     ctx.redirect('/');
