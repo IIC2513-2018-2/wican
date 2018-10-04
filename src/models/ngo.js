@@ -12,11 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     logo: {
       type: DataTypes.STRING,
-      validate: {
-        isUrl: {
-          msg: 'debe ser una URL válida',
-        },
-      },
     },
     email: {
       type: DataTypes.STRING,

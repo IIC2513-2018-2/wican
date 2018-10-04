@@ -1,0 +1,30 @@
+<h1>Crear ONG</h1>
+
+<div>
+  <form class="single-form" action="<%= submitPath %>" method="post" enctype="multipart/form-data">
+
+    <label for="name">
+      <span>nombre</span>
+      <input type="text" name="name" id="name" value="<%= ngo.name %>" />
+    </label>
+    <label for="description">
+      <span>descripción</span>
+      <input type="text" name="description" id="description" value="<%= ngo.description %>" />
+    </label>
+    <label for="logo">
+      <span>logo</span>
+      <input type="file" name="logo" id="logo" value="<%= ngo.logo %>" />
+    </label>
+    <label for="email">
+      <span>e-mail</span>
+      <input type="email" name="email" id="email" value="<%= ngo.email %>" />
+    </label>
+    <label for="website">
+      <span>website</span>
+      <input type="url" name="website" id="website" value="<%= ngo.website %>" />
+    </label>
+    <div class="actions">
+      <input type="submit" value="Crear" />
+    </div>
+  </form>
+</div>

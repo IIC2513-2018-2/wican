@@ -4,7 +4,7 @@
   <% ngos.forEach(ngo => { %>
     <li>
       <a class="card" href="<%= getShowPath(ngo) %>">
-        <img src="<%= ngo.logo %>" alt="Logo de ONG"/>
+        <img src="<%= getNgoLogoPath(ngo) %>" alt="Logo de ONG"/>
         <span><%= ngo.name %></span>
       </a>
       <a class="website-icon" href="<%= ngo.website %>"><i class="icon ion-ios-link"></i></a>
