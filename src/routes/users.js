@@ -1,5 +1,6 @@
 const KoaRouter = require('koa-router');
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
+const sendWelcomeEmail = require('../mailers/welcome');
 
 const router = new KoaRouter();
 
@@ -33,6 +34,7 @@ router.post('users-create', '/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
     await user.save(ctx.request.body);
+    sendWelcomeEmail(ctx, { user });
     ctx.redirect(ctx.router.url('users'));
   } catch (error) {
     if (!isValidationError(error)) throw error;
