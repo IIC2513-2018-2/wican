@@ -61,6 +61,9 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+    },
   }, {
     getterMethods: {
       fullName() {
