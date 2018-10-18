@@ -22,7 +22,7 @@ router.get('users-new', '/new', ctx => ctx.render(
 router.post('users-create', '/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
-    await user.save(ctx.request.body);
+    await user.save({ fields: ['firstName', 'lastName', 'email', 'password'] });
     sendWelcomeEmail(ctx, { user });
     ctx.flashMessage.notice = 'Cuenta registrada exitosamente';
     ctx.redirect('/');
