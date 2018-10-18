@@ -1,10 +1,11 @@
 const KoaRouter = require('koa-router');
+const initiatives = require('./initiatives');
 const cloudStorage = require('../lib/cloud-storage');
 
 const router = new KoaRouter();
 
 router.param('id', async (id, ctx, next) => {
-  const ngo = await ctx.orm.ngo.findById(ctx.params.id);
+  const ngo = await ctx.orm.ngo.findById(id);
   ctx.assert(ngo, 404);
   ctx.state.ngo = ngo;
   return next();
@@ -35,7 +36,12 @@ router.post('ngos-create', '/', async (ctx) => {
 });
 
 router.get('ngos-show', '/:id', async (ctx) => {
-  ctx.body = ctx.state.ngo;
+  const { ngo } = ctx.state;
+  return ctx.render('ngos/show', {
+    ngo,
+    initiatives: await ngo.getInitiatives(),
+    buildInitiativePath: initiative => ctx.router.url('initiatives-show', ngo.id, initiative.id),
+  });
 });
 
 router.get('ngos-show-logo', '/:id/logo', async (ctx) => {
@@ -46,5 +52,7 @@ router.get('ngos-show-logo', '/:id/logo', async (ctx) => {
     ctx.body = cloudStorage.download(logo);
   }
 });
+
+router.use('/:id/initiatives', initiatives.routes());
 
 module.exports = router;

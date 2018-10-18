@@ -12,6 +12,7 @@ module.exports = {
         createdAt: faker.date.past(0.5, new Date(2017, 0, 1)),
         updatedAt: faker.date.past(0.5, new Date(2018, 0, 1)),
       })));
+    usersData[0].isAdmin = true;
     return queryInterface.bulkInsert('users', usersData);
   },
   down: queryInterface => queryInterface.bulkDelete('users', null, {}),

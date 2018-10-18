@@ -1,0 +1,8 @@
+<h1><%= ngo.name %></h1>
+<p><%= ngo.description %></p>
+<h2>Nuestras iniciativas</h2>
+<ul>
+  <% initiatives.forEach(initiative => { %>
+    <li><a href="<%= buildInitiativePath(initiative) %>"><%= initiative.title %></a></li>
+  <% }); %>
+</ul>

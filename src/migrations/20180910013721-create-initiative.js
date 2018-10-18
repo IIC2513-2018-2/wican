@@ -1,5 +1,5 @@
 module.exports = {
-  up(queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     return queryInterface.createTable('initiatives', {
       id: {
         allowNull: false,
@@ -25,6 +25,14 @@ module.exports = {
       },
       hashtag: {
         type: Sequelize.STRING,
+      },
+      ngoId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'ngos',
+          key: 'id',
+        },
+        onDelete: 'cascade',
       },
       createdAt: {
         allowNull: false,

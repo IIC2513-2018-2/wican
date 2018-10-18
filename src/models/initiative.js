@@ -28,8 +28,24 @@ module.exports = (sequelize, DataTypes) => {
     active: DataTypes.BOOLEAN,
     hashtag: DataTypes.STRING,
   }, {});
+
   initiative.associate = function associate(models) {
     initiative.belongsTo(models.ngo);
+    initiative.hasMany(models.initiativeSign, { as: 'signs' });
   };
+
+  initiative.prototype.sign = function sign(userOrData) {
+    const { initiativeSign, user } = sequelize.models;
+    const newInitiativeSign = initiativeSign.build();
+    newInitiativeSign.setInitiative(this, { save: false });
+    if (userOrData instanceof user) {
+      newInitiativeSign.setUser(userOrData, { save: false });
+    } else {
+      newInitiativeSign.name = userOrData.name;
+      newInitiativeSign.email = userOrData.email;
+    }
+    return newInitiativeSign.save();
+  };
+
   return initiative;
 };
