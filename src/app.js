@@ -80,6 +80,29 @@ render(app, {
 
 mailer(app);
 
+
+app.use(async (ctx, next) => {
+  try {
+    // let's try to execute the middleware stack
+    await next();
+  } catch (error) {
+    // if there is an error, we capture it to check if we want to have a specific handling
+    let viewToRender;
+    if (error.name === 'ForbiddenError') {
+      viewToRender = 'errors/403';
+    }
+    // if we are going to handle this, we'll need to still emit the error (app.emit)
+    // so other things depending on that from the default handler can still use this error event
+    if (viewToRender) {
+      app.emit('error', error);
+      await ctx.render(viewToRender, error);
+    } else {
+      // if we won't handle it, then we can throw it so it gets caught by the default error handler
+      throw error;
+    }
+  }
+});
+
 // Routing middleware
 app.use(routes.routes());
 
