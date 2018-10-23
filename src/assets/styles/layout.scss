@@ -20,6 +20,7 @@ a {
 }
 
 header {
+  transition: height 500ms ease-in;
   position: fixed;
   top: 0;
   right: 0;
@@ -43,7 +44,7 @@ header {
       position: relative;
       line-height: 80px;
       color: red;
-      transition: background 200ms ease-in;
+      transition: all 500ms ease-in;
       &::after { // & means repeating the same containing selector so we can append the ::after. If we write a::after here would mean a::after inside another anchor
         display: block;
         content: "";
@@ -84,6 +85,16 @@ header {
           background: lighten($color: $wican-green, $amount: 50%);
         }
       }
+    }
+  }
+}
+
+body.mini-header {
+  padding-top: 70px;
+  header {
+    height: 50px;
+    nav a {
+      line-height: 50px;
     }
   }
 }
