@@ -1,3 +1,11 @@
 <h1><%= initiative.title %></h1>
 <p><%= initiative.description %></p>
+<% if (locals.news) { %>
+  <h2>Related news (Powered by The Guardian)</h2>
+  <ul>
+    <% news.forEach(article => { %>
+      <li><a href="<%= article.url %>"><%= article.title %></a></li>
+    <% }) %>
+  </ul>
+<% } %>
 <div id="sign-initiative-app" data-ngo-id="<%= initiative.ngoId %>" data-initiative-id="<%= initiative.id %>"></div>

@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const theGuardianAPI = require('../lib/apis/the-guardian');
 
 const router = new KoaRouter();
 
@@ -29,14 +30,17 @@ router.put('initiatives-sign', '/:initiativeId/sign', async (ctx) => {
 router.get('initiatives-show', '/:initiativeId', async (ctx) => {
   const { ngo, initiative } = ctx.state;
   const initiativeSignsCount = await initiative.countSigns();
+  let news;
   switch (ctx.accepts(['html', 'json'])) {
     case 'json':
       ctx.body = { ...initiative.toJSON(), signsCount: initiativeSignsCount };
       break;
     case 'html':
+      news = await theGuardianAPI.search(initiative.keywords);
       await ctx.render('initiatives/show', {
         initiative,
         initiativeSignsCount,
+        news,
         signPath: ctx.router.url('initiatives-sign', ngo.id, initiative.id),
         ngo,
       });
