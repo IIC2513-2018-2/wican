@@ -10,6 +10,7 @@ const override = require('koa-override-method');
 const assets = require('./assets');
 const mailer = require('./mailers');
 const routes = require('./routes');
+const apiRoutes = require('./routes/api');
 const orm = require('./models');
 
 // App constructor
@@ -103,6 +104,8 @@ app.use(async (ctx, next) => {
   }
 });
 
+// Routing middleware
+app.use(apiRoutes.routes());
 // Routing middleware
 app.use(routes.routes());
 
