@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const KoaRouter = require('koa-router');
+const initiativesRouter = require('./initiatives');
 
 const router = new KoaRouter();
 
@@ -23,5 +24,7 @@ router.get('ngos-show', '/:id', async (ctx) => {
   const ngo = await ctx.orm.ngo.findById(ctx.params.id);
   ctx.body = _.pick(ngo, 'id', 'name', 'description', 'logo', 'email', 'website', 'createdAt');
 });
+
+router.use('/:ngoId/initiatives', initiativesRouter.routes());
 
 module.exports = router;
